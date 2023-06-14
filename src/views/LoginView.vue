@@ -11,7 +11,10 @@
           <label for="password">Password</label>
           <input type="password" id="password" v-model="password" required>
         </div>
-  
+
+        <!-- Error message -->
+        <p class="error" v-if="errorMessage">{{ errorMessage }}</p>
+
         <button class="submit-btn" type="submit">Login</button>
       </form>
       <p class="register-link">If you are not a member, <router-link to="/register">register here</router-link>.</p>
@@ -67,6 +70,10 @@ h1 {
   text-align: center;
   margin-top: 20px;
 }
+.error {
+  color: red;
+  margin-top: 10px;
+}
 </style>
 
   <script>
@@ -76,31 +83,37 @@ h1 {
     data() {
       return {
         email: '',
-        password: ''
+        password: '',
+        errorMessage: '',  // to store the error message
       }
     },
     methods: {
-      login() {
-        axios.post('http://localhost:8000/api/login', {
+    async login() {
+      this.errorMessage = '';  // clear previous error message
+      try {
+        const response = await axios.post('http://localhost:8000/api/login', {
           email: this.email,
           password: this.password
-        })
-        .then(response => {
-           // Save user_id in local storage
+        });
+
+        // Save user_id in local storage
         localStorage.setItem('user_id', response.data.user_id);
-         // Check user_role and redirect
-         if(response.data.user_role === 'admin') {
+
+        // Check user_role and redirect
+        if(response.data.user_role === 'admin') {
           this.$router.push('/adminpage');
         } else {
           this.$router.push('/homepage');
         }
-        })
-        .catch(error => {
-          console.log(error)
-          // Handle the error. Maybe show a message to the user, etc.
-        })
+        
+      } catch (error) {
+        if (error.response) {
+          // Show the error message from the response to the user
+          this.errorMessage = error.response.data.message;
+        }
       }
     }
   }
-  </script>
+}
+</script>
   
