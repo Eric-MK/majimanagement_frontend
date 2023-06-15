@@ -32,14 +32,60 @@
   </template>
   
   <style scoped>
-  /* your styles */
-  
-  .error {
-    color: red;
-    margin-top: 10px;
-  }
-  
-  </style>
+.container {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.error {
+  color: red;
+  margin: 10px 0;
+}
+
+.submit-btn {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  color: white;
+  background-color: #007bff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.submit-btn:hover {
+  background-color: #0056b3;
+}
+
+.login-link {
+  text-align: center;
+  margin-top: 20px;
+}
+</style>
+
   
   <script>
   import axios from 'axios'
