@@ -5,6 +5,8 @@
         <div v-for="report in filteredReports" :key="report.id">
             <h2>{{ report.location }}</h2>
             <p>{{ report.description }}</p>
+            <p>Reported by: {{ report.user.name }}</p> <!-- showing reporter's name -->
+            <p>Status: </p>
             <select v-model="report.status" @change="updateReportStatus(report)">
                 <option value="pending">Pending</option>
                 <option value="approved">Approved</option>
@@ -39,15 +41,15 @@ export default {
             }
         },
         async updateReportStatus(report) {
-    try {
-        const response = await axios.put(`http://localhost:8000/api/reports/${report.id}`, {
-            status: report.status,
-        })
-        console.log(response.data)
-    } catch (error) {
-        console.error(error)
-    }
-}
+            try {
+                const response = await axios.put(`http://localhost:8000/api/reports/${report.id}`, {
+                    status: report.status,
+                })
+                console.log(response.data)
+            } catch (error) {
+                console.error(error)
+            }
+        }
     },
     mounted() {
         this.getReports()
