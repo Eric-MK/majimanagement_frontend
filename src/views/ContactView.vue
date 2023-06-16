@@ -19,7 +19,6 @@
             <p>{{contact.phone}}</p>
             <p>{{contact.email}}</p>
             <p>{{contact.location}}</p>
-            <button @click="updateContact(contact)">Update</button>
             <button @click="deleteContact(contact)">Delete</button>
         </div>
     </div>
@@ -67,12 +66,6 @@ export default {
             axios.get('http://localhost:8000/api/contacts')
                 .then(response => {
                     this.contacts = response.data;
-                })
-        },
-        updateContact(contact) {
-            axios.put(`http://localhost:8000/api/contacts/${contact.id}`, contact)
-                .then(response => {
-                    this.getContacts();
                 })
         },
         deleteContact(contact) {
