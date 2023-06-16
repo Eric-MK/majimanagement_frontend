@@ -3,15 +3,16 @@
         <h1>Admin Dashboard</h1>
         <input type="text" v-model="searchTerm" placeholder="Search by location">
         <div v-for="report in filteredReports" :key="report.id">
-            <h2>{{ report.location }}</h2>
-            <p>{{ report.description }}</p>
+            <h2>Location: {{ report.location }}</h2>
+            <p>Description: {{ report.description }}</p>
             <p>Reported by: {{ report.user.name }}</p> <!-- showing reporter's name -->
-            <p>Status: </p>
-            <select v-model="report.status" @change="updateReportStatus(report)">
+            <p>User email: {{ report.user.email}}</p>
+            <p>Status: <select v-model="report.status" @change="updateReportStatus(report)">
                 <option value="pending">Pending</option>
                 <option value="approved">Approved</option>
                 <option value="denied">Denied</option>
-            </select>
+            </select></p>
+         
         </div>
     </div>
 </template>
