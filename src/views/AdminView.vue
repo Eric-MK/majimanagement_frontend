@@ -1,4 +1,5 @@
 <template>
+<AdminNavigation/>
     <div>
         <h1>Admin Dashboard</h1>
         <input type="text" v-model="searchTerm" placeholder="Search by location">
@@ -19,6 +20,7 @@
 
 <script>
 import axios from 'axios'
+import AdminNavigation from '../views/NavigationAdminView.vue'
 
 export default {
     data() {
@@ -54,6 +56,9 @@ export default {
     },
     mounted() {
         this.getReports()
-    }
+    },
+    components: {
+        AdminNavigation,
+  },
 }
 </script>

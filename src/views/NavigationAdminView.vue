@@ -3,7 +3,7 @@
     <nav>
       <ul>
         <li>
-          <h1 class="text-2xl font-bold text-white"><span style="font-style: oblique;"><u>SpursMatchUp</u></span></h1>
+          <h1 class="text-2xl font-bold text-white"><span style="font-style: oblique;"><u>MajiManagement<sub>admin</sub></u></span></h1>
         </li>
         <li class="centered">
           <router-link to="/adminpage" active-class="active-link">Reports</router-link>
@@ -20,38 +20,47 @@
   </template>
   
   <style>
-  nav {
-    display: flex;
-    justify-content: center; /* Centers the tabs */
-    align-items: center; /* Vertically centers the items */
-    background-color: #111827;
-  }
-  
   ul {
-    display: flex;
-    list-style: none;
-    padding: 0;
+    list-style-type: none;
     margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
   }
-  
-  .centered {
-    margin: 0 10px;
-    color: #fff;
+
+  li {
+    float: left;
+  }
+
+  li h1 {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 20px;
+  }
+
+  li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
     text-decoration: none;
     font-size: 18px;
-    padding: 10px;
-    border-radius: 5px;
   }
-  
-  .centered:hover {
-    text-decoration: underline;
+
+  li a:hover:not(.active-link) {
+    background-color: #111;
   }
-  
+
   .active-link {
-    background-color: rgb(0,0,139);
-    padding: 10px;
-    border-radius: 5px;
-    
+    background-color: #4CAF50;
   }
-  </style>
+
+  .centered {
+    text-align: center;
+  }
+</style>
+
   
