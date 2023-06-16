@@ -1,7 +1,6 @@
 <template>
 <AdminNavigation/>
     <div>
-        <h1>Admin Dashboard</h1>
         <input type="text" v-model="searchTerm" placeholder="Search by City">
         <div v-for="report in filteredReports" :key="report.id">
             <h2>City: {{ report.city }}</h2>
