@@ -2,9 +2,12 @@
 <AdminNavigation/>
     <div>
         <h1>Admin Dashboard</h1>
-        <input type="text" v-model="searchTerm" placeholder="Search by location">
+        <input type="text" v-model="searchTerm" placeholder="Search by City">
         <div v-for="report in filteredReports" :key="report.id">
-            <h2>Location: {{ report.location }}</h2>
+            <h2>City: {{ report.city }}</h2>
+            <p>Street: {{ report.street }}</p>
+            <p>Street_Number: {{ report.number }}</p>
+            <p>Postal_Code: {{ report.postal_code }}</p>
             <p>Description: {{ report.description }}</p>
             <p>Reported by: {{ report.user.name }}</p> <!-- showing reporter's name -->
             <p>User email: {{ report.user.email}}</p>
@@ -71,7 +74,7 @@ export default {
     },
     computed: {
         filteredReports() {
-            return this.reports.filter(report => report.location.includes(this.searchTerm))
+            return this.reports.filter(report => report.city.includes(this.searchTerm))
         }
     },
     methods: {
