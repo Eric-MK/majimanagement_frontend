@@ -16,9 +16,9 @@
         <h1>Contacts</h1>
         <div v-for="contact in contacts" :key="contact.id">
             <h2>{{contact.name}}</h2>
-            <p>{{contact.phone}}</p>
-            <p>{{contact.email}}</p>
-            <p>{{contact.location}}</p>
+            <p>Phone No: {{contact.phone}}</p>
+            <p>Email: {{contact.email}}</p>
+            <p>City: {{contact.location}}</p>
             <button @click="deleteContact(contact)">Delete</button>
             <div v-if="messages" class="success-message">{{ messages }}</div>
 
