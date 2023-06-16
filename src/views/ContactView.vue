@@ -20,6 +20,8 @@
             <p>{{contact.email}}</p>
             <p>{{contact.location}}</p>
             <button @click="deleteContact(contact)">Delete</button>
+            <div v-if="messages" class="success-message">{{ messages }}</div>
+
         </div>
     </div>
 </template>
@@ -72,12 +74,15 @@ export default {
             axios.delete(`http://localhost:8000/api/contacts/${contact.id}`)
                 .then(response => {
                     this.getContacts();
+                    this.messages = response.data.message; // show deletion success message
+                    this.clearMessage();
                 })
         },
         clearMessage() {
             setTimeout(() => {
                 this.errors = {};
                 this.message = '';
+                this.messages = '';
             }, 3000);
         }
     },
