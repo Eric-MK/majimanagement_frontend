@@ -17,6 +17,46 @@
         </div>
     </div>
 </template>
+<style>
+  div {
+    margin: 0;
+    padding: 10px;
+    font-family: Arial, sans-serif;
+  }
+
+  h1 {
+    font-size: 2em;
+    color: #333;
+    text-align: center;
+    padding: 10px;
+  }
+
+  input[type="text"] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+  }
+
+  h2 {
+    font-size: 1.5em;
+    color: #333;
+    margin-top: 15px;
+    margin-bottom: 5px;
+  }
+
+  p {
+    font-size: 1em;
+    color: #666;
+    line-height: 1.6;
+  }
+
+  select {
+    padding: 5px;
+    font-size: 1em;
+  }
+</style>
 
 <script>
 import axios from 'axios'
