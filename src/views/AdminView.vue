@@ -16,6 +16,9 @@
                 <option value="approved">Approved</option>
                 <option value="denied">Denied</option>
             </select></p>
+
+            <p v-if="report.updateMessage">{{ report.updateMessage }}</p>
+
          
         </div>
     </div>
@@ -91,7 +94,13 @@ export default {
                 const response = await axios.put(`http://localhost:8000/api/reports/${report.id}`, {
                     status: report.status,
                 })
+                // Set updateMessage to response message
+                report.updateMessage = response.data.message;
                 console.log(response.data)
+                 // Clear the update message after 1 second
+        setTimeout(() => {
+            report.updateMessage = null;
+        }, 2000);
             } catch (error) {
                 console.error(error)
             }
