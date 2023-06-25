@@ -93,6 +93,15 @@ export default {
             }, 2000);
         }
     },
+    beforeMount() {
+        const userId = localStorage.getItem('user_id');
+            console.log('User ID:', userId);  // Print user ID to console
+
+            if (!userId) {
+                // Redirect to login page if user id is not present
+                this.$router.push('/login');
+            }
+    },
     created() {
         this.getTips();
     }
