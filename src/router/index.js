@@ -47,6 +47,11 @@ const router = createRouter({
       name: 'tips',
       component: () => import('../views/TipsView.vue')    
     },
+    {
+      path: '/logout',
+      name: 'logout',
+      component: () => import('../views/LogoutView.vue')    
+    },
 
 
   ]
