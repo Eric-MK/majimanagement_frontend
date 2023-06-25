@@ -16,12 +16,15 @@
             <li class="centered">
                 <router-link to="/ucontacts" active-class="active-link">Contacts</router-link>
             </li>
+            <li class="centered">
+                <router-link to="/uprofile" active-class="active-link">Profile</router-link>
+            </li>
             <li class="centered right">
                 <a @click="logout">Logout</a>
             </li>
         </ul>
     </nav>
-  </template>
+</template>
   
   <style>
   ul {
