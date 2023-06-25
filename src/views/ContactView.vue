@@ -20,8 +20,7 @@
             <p>Email: {{contact.email}}</p>
             <p>City: {{contact.location}}</p>
             <button @click="deleteContact(contact)">Delete</button>
-            <div v-if="messages" class="success-message">{{ messages }}</div>
-
+            <div v-if="contact.message" class="success-message">{{ contact.message }}</div>
         </div>
     </div>
 </template>
@@ -67,22 +66,30 @@ export default {
         getContacts() {
             axios.get('http://localhost:8000/api/contacts')
                 .then(response => {
-                    this.contacts = response.data;
+                    // add a 'message' field to each contact
+                    this.contacts = response.data.map(contact => {
+                        contact.message = '';
+                        return contact;
+                    });
                 })
         },
         deleteContact(contact) {
             axios.delete(`http://localhost:8000/api/contacts/${contact.id}`)
                 .then(response => {
+                    // find the deleted contact in the contacts array
+                    const contactIndex = this.contacts.findIndex(c => c.id === contact.id);
+                    // if found, set its message field
+                    if (contactIndex > -1) {
+                        this.contacts[contactIndex].message = response.data.message;
+                    }
                     this.getContacts();
-                    this.messages = response.data.message; // show deletion success message
-                    this.clearMessage();
                 })
         },
         clearMessage() {
             setTimeout(() => {
                 this.errors = {};
                 this.message = '';
-                this.messages = '';
+                this.contacts.forEach(contact => contact.message = '');
             }, 3000);
         }
     },
