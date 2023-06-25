@@ -53,7 +53,7 @@ export default {
                 .then(response => {
                     this.tips.push(response.data.tip);
                     this.newTip = { title: '', content: '' };
-                    this.message = 'Tip created successfully.'; // show success message
+                    this.message = response.data.message;// show success message
                     this.clearMessage();
                 })
                 .catch(error => {
