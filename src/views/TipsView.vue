@@ -15,7 +15,8 @@
         <div v-for="tip in tips" :key="tip.id">
             <h2>{{ tip.title }}</h2>
             <p>{{ tip.content }}</p>
-            <button @click="deleteTip(tip.id)">Delete</button>
+            <button @click="deleteTip(tip)">Delete</button>
+            <div v-if="tip.message" class="success-message">{{ tip.message }}</div>
         </div>
     </div>
 </template>
@@ -33,7 +34,7 @@ export default {
                 content: ''
             },
             errors: {}, // store the validation errors
-            message: '' // store the success message
+            message: '', // store the success message
         }
     },
     components: {
@@ -43,9 +44,10 @@ export default {
         getTips() {
             axios.get('http://localhost:8000/api/tips')
                 .then(response => {
-                    console.log('Response from server:', response.data);
-
-                    this.tips = response.data;
+                    this.tips = response.data.map(tip => {
+                        tip.message = '';
+                        return tip;
+                    });
                 })
         },
         createTip() {
@@ -65,22 +67,29 @@ export default {
                     }
                 });
         },
-        /* updateTip(tip) {
-            axios.put(`http://localhost:8000/api/tips/${tip.id}`, tip)
+        deleteTip(tip) {
+            axios.delete(`http://localhost:8000/api/tips/${tip.id}`)
                 .then(response => {
-                    this.getTips();
-                }) 
-        }, */
-        deleteTip(tipId) {
-            axios.delete(`http://localhost:8000/api/tips/${tipId}`)
-                .then(response => {
-                    this.getTips();
+                    const tipIndex = this.tips.findIndex(t => t.id === tip.id);
+                    if (tipIndex > -1) {
+                        this.tips[tipIndex].message = response.data.message;
+                        this.getTips();
+                    }
                 })
+                .catch(error => {
+                    if (error.response && error.response.status === 400) {
+                        // The request was made and the server responded with a status code
+                        // that falls out of the range of 2xx
+                        this.errors = error.response.data;
+                        this.clearMessage();
+                    }
+                });
         },
         clearMessage() {
             setTimeout(() => {
                 this.errors = {};
                 this.message = '';
+                this.tips.forEach(tip => tip.message = '');
             }, 2000);
         }
     },
