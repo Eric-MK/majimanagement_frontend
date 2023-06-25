@@ -52,6 +52,22 @@ const router = createRouter({
       name: 'logout',
       component: () => import('../views/LogoutView.vue')    
     },
+    {
+      path: '/ureport',
+      name: 'ureport',
+      component: () => import('../views/UreportView.vue')    
+    },
+    {
+      path: '/utips',
+      name: 'utips',
+      component: () => import('../views/UtipsView.vue')    
+    },
+    {
+      path: '/ucontacts',
+      name: 'ucontacts',
+      component: () => import('../views/UcontactsView.vue')    
+    },
+
 
 
   ]
