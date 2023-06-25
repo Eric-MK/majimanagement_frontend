@@ -67,6 +67,11 @@ const router = createRouter({
       name: 'ucontacts',
       component: () => import('../views/UcontactsView.vue')    
     },
+    {
+      path: '/uprofile',
+      name: 'profile',
+      component: () => import('../views/ProfileView.vue')    
+    },
 
 
 
