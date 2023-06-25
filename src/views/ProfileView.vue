@@ -127,16 +127,16 @@ export default {
             });
         },
         changePassword() {
-            if (this.passwords.new !== this.passwords.confirm) {
-                alert('Passwords do not match!');
-                return;
-            }
+    if (this.passwords.new !== this.passwords.confirm) {
+        alert('Passwords do not match!');
+        return;
+    }
 
-            const userId = localStorage.getItem('user_id');
-            axios.put(`http://localhost:8000/api/users/${userId}/password`, { password: this.passwords.new }).then(() => {
-                this.$router.push('/homepage');
-            });
-        },
+    const userId = localStorage.getItem('user_id');
+    axios.put(`http://localhost:8000/api/users/${userId}/password`, { password: this.passwords.new, password_confirmation: this.passwords.confirm }).then(() => {
+        this.$router.push('/homepage');
+    });
+},
         deleteProfile() {
             const userId = localStorage.getItem('user_id');
             axios.delete(`http://localhost:8000/api/users/${userId}`).then(() => {
