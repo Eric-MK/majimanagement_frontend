@@ -137,13 +137,14 @@ export default {
         this.$router.push('/homepage');
     });
 },
-        deleteProfile() {
-            const userId = localStorage.getItem('user_id');
-            axios.delete(`http://localhost:8000/api/users/${userId}`).then(() => {
-                localStorage.removeItem('user_id');
-                this.$router.push('/login');
-            });
-        },
+deleteProfile() {
+    const userId = localStorage.getItem('user_id');
+    axios.delete(`http://localhost:8000/api/users/${userId}`).then(() => {
+        localStorage.removeItem('user_id');
+        this.$router.push('/login');
+    });
+}
+,
     },
     created() {
         this.loadUserData();
