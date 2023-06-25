@@ -14,7 +14,7 @@
               <router-link to="/contacts" active-class="active-link">Contacts</router-link>
           </li>
           <li class="centered right">
-              <router-link to="/logout" active-class="active-link">Logout</router-link>
+              <a @click="logout">Logout</a>
           </li>
       </ul>
   </nav>
@@ -67,3 +67,15 @@ li a:hover:not(.active-link) {
   float: right;
 }
 </style>
+<script>
+export default {
+  methods: {
+    logout() {
+      // Remove user_id from localStorage
+      localStorage.removeItem('user_id');
+      // Redirect to login page
+      this.$router.push('/login');
+    },
+  },
+};
+</script>

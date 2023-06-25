@@ -96,20 +96,33 @@ export default {
                 // Set updateMessage to response message
                 report.updateMessage = response.data.message;
                 console.log(response.data)
-                 // Clear the update message after 1 second
-        setTimeout(() => {
-            report.updateMessage = null;
-        }, 2000);
+                // Clear the update message after 1 second
+                setTimeout(() => {
+                    report.updateMessage = null;
+                }, 2000);
             } catch (error) {
                 console.error(error)
             }
+        },
+        checkUserId() {
+            const userId = localStorage.getItem('user_id');
+            console.log('User ID:', userId);  // Print user ID to console
+
+            if (!userId) {
+                // Redirect to login page if user id is not present
+                this.$router.push('/login');
+            }
         }
+    },
+    beforeMount() {
+        this.checkUserId(); // Check if user id is present
     },
     mounted() {
         this.getReports()
     },
     components: {
         AdminNavigation,
-  },
+    },
 }
 </script>
+
