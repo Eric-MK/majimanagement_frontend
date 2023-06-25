@@ -89,6 +89,15 @@ export default {
     created() {
         this.getContacts()
     },
+    beforeMount() {
+        const userId = localStorage.getItem('user_id');
+            console.log('User ID:', userId);  // Print user ID to console
+
+            if (!userId) {
+                // Redirect to login page if user id is not present
+                this.$router.push('/login');
+            }
+    },
     components: {
         AdminNavigation,
     },
