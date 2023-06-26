@@ -1,24 +1,33 @@
 <template>
     <UserNavigation/>
      <div class="homepage">
-         <form @submit.prevent="createReport">
-             <label for="city">City:</label>
-             <input v-model="newReport.city" id="city" required>
+        <form @submit.prevent="createReport">
+    <label for="city">City:</label>
+    <select v-model="newReport.city" id="city" required>
+        <option disabled value="">Please select a city</option>
+        <option>Nairobi</option>
+        <option>Mombasa</option>
+        <option>Kisumu</option>
+        <option>Nakuru</option>
+        <option>Eldoret</option>
+        <!-- Add more cities as needed -->
+    </select>
 
-             <label for="street">Street:</label>
-             <input v-model="newReport.street" id="street" required>
+    <label for="street">Street:</label>
+    <input v-model="newReport.street" id="street" required>
 
-             <label for="number">Number:</label>
-             <input v-model="newReport.number" id="number" required>
+    <label for="number">Number:</label>
+    <input v-model="newReport.number" id="number" required>
 
-             <label for="postal_code">Postal Code:</label>
-             <input v-model="newReport.postal_code" id="postal_code" required>
+    <label for="postal_code">Postal Code:</label>
+    <input v-model="newReport.postal_code" id="postal_code" required>
 
-             <label for="description">Description:</label>
-             <textarea v-model="newReport.description" id="description" required></textarea>
+    <label for="description">Description:</label>
+    <textarea v-model="newReport.description" id="description" required></textarea>
 
-             <button type="submit">Create Report</button>
-         </form>
+    <button type="submit">Create Report</button>
+</form>
+
          <div v-for="report in reports" :key="report.id">
              <h2>{{ report.description }}</h2>
              <p>{{ report.city }}, {{ report.street }}, {{ report.number }}, {{ report.postal_code }}</p>
