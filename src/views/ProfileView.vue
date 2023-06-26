@@ -25,6 +25,8 @@
 
         <button @click="deleteProfile" class="delete-btn">Delete Profile</button>
     </div>
+    <FooterView/>
+
 </template>
 
 <style scoped>
@@ -83,6 +85,8 @@
 <script>
 import axios from 'axios';
 import UserNavigation from '../views/UserNavigation.vue'
+import FooterView from '../views/FooterView.vue'
+
 
 export default {
     data() {
@@ -99,6 +103,8 @@ export default {
     },
     components: {
         UserNavigation,
+        FooterView,
+
     },
     beforeMount() {
         const userId = localStorage.getItem('user_id');

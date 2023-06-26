@@ -3,15 +3,20 @@
      <div class="homepage">
             <p>Tips:</p>
         </div>
+        <FooterView/>
+
     </template>
     
     <script>
     import UserNavigation from '../views/UserNavigation.vue'
-    
+    import FooterView from '../views/FooterView.vue'
+
     export default {
         
         components: {
             UserNavigation,
+            FooterView,
+
         },
         beforeMount() {
             const userId = localStorage.getItem('user_id');
