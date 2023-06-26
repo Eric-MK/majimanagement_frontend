@@ -1,17 +1,19 @@
 <template>
     <UserNavigation/>
-    <div class="homepage">
-        <div class="header">
+    <div :class="$style.homepage">
+        <div :class="$style.header">
             <h1>Welcome, {{ user.name }}</h1>
             <p>Join us in our mission to manage water resources effectively and efficiently. Report any issues or share your suggestions today.</p>
-            <button @click="navigateToReport" class="cta-button">Report Now</button>
+            <button @click="navigateToReport" :class="$style.ctaButton">Report Now</button>
         </div>
     </div>
+    <FooterView/>
 </template>
 
 <script>
 import axios from 'axios'
 import UserNavigation from '../views/UserNavigation.vue'
+import FooterView from '../views/FooterView.vue'
 
 export default {
     data() {
@@ -23,6 +25,7 @@ export default {
     },
     components: {
         UserNavigation,
+        FooterView,
     },
     beforeMount() {
         const userId = localStorage.getItem('user_id');
@@ -49,13 +52,14 @@ export default {
                 });
         },
         navigateToReport() {
-            this.$router.push('/report');
+            this.$router.push('/ureport');
         }
     }
 }
 </script>
 
-<style scoped>
+<!-- Define your styles inside a module -->
+<style module>
 .homepage {
     width: 80%;
     margin: auto;
@@ -79,7 +83,7 @@ export default {
     margin-bottom: 30px;
 }
 
-.cta-button {
+.ctaButton {
     background-color: #3498db;
     color: white;
     border: none;
@@ -90,7 +94,7 @@ export default {
     transition: background-color 0.3s ease;
 }
 
-.cta-button:hover {
+.ctaButton:hover {
     background-color: #2980b9;
 }
 </style>

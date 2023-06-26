@@ -26,7 +26,7 @@
     </nav>
 </template>
   
-  <style>
+  <style scoped>
   ul {
     list-style-type: none;
     margin: 0;

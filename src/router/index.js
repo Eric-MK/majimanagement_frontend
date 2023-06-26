@@ -72,6 +72,11 @@ const router = createRouter({
       name: 'profile',
       component: () => import('../views/ProfileView.vue')    
     },
+    {
+      path: '/footer',
+      name: 'footer',
+      component: () => import('../views/FooterView.vue')    
+    },
 
 
 
