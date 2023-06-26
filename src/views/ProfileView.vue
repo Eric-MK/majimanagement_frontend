@@ -1,7 +1,7 @@
 <template>
     <UserNavigation/>
     <div class="profile-container">
-        <h1>Your Profile</h1>
+        <h1>Profile</h1>
 
         <form @submit.prevent="updateProfile" class="profile-form">
             <label>Name:</label>
