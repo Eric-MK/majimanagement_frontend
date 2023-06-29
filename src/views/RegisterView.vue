@@ -35,7 +35,7 @@
 
 <style scoped>
 .body-wrapper {
-  background-image: url('back.jpg');
+  background-image: url('watertap.jpg');
   background-size: cover;
   background-position: center;
 }

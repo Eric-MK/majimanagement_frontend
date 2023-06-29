@@ -40,7 +40,7 @@ body {
   align-items: center;
   min-height: 100vh;
   background-color: #f2f2f2;
-  background-image: url('back.jpg');
+  background-image: url('watertap.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -96,6 +96,7 @@ h2 {
   text-align: center;
   color: #333333;
   margin-left: auto;
+  margin-bottom: 110px;
 }
 
 h1 {
