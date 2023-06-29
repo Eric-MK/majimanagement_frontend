@@ -40,7 +40,7 @@ body {
   align-items: center;
   min-height: 100vh;
   background-color: #f2f2f2;
-  background-image: url('watertap.jpg');
+  background-image: url('drinkingwater1.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -50,7 +50,7 @@ body {
   width: 50%;
   padding: 50px;
   text-align: center;
-  color: #f1eeee;
+  color: #ece0e0;
   margin-right: auto;
 }
 
@@ -94,7 +94,7 @@ h2 {
 .container {
   width: 50%;
   text-align: center;
-  color: #333333;
+  color: #05140b;
   margin-left: auto;
   margin-bottom: 110px;
 }
