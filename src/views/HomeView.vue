@@ -4,7 +4,7 @@
       <div :class="$style.homepage">
 
           <div :class="$style.header">
-          <h1>Welcome, {{ user.name }}</h1>
+          <h1>Welcome, <span>{{ user.name }}</span></h1>
           <p>Join us in our mission to manage water resources effectively and efficiently. Report any issues or share your suggestions today.</p>
           <button @click="navigateToReport" :class="$style.ctaButton">Report Now</button>
 
@@ -70,6 +70,14 @@
     min-height: 100vh;
   }
 
+  .header span{
+    border: 2px solid black;
+    border-radius: 8px;
+    padding: 5px;
+    background-color: #ece0e0;
+    color: black;
+
+  }
   
   .homepage {
     flex: 1;
@@ -77,7 +85,7 @@
     margin: auto;
     padding: 20px;
     text-align: center;
-    background-image: url('river2.jpg');
+    background-image: url('drinkingwater2.jpg');
     background-size: cover;
     margin-bottom: 90px;
     margin-top: 10px;
@@ -92,14 +100,14 @@
   
   .header h1 {
     font-size: 2em;
-    color: #333;
+    color: #ece0e0;
     margin-bottom: 0px;
     margin-top: 65px;
   }
   
   .header p {
-    font-size: 1.2em;
-    color: #666;
+    font-size: 1.3em;
+    color: #f3ecec;
     margin-bottom: 100px;
   }
   
@@ -112,7 +120,7 @@
     font-size: 1.2em;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-bottom: 90px;
+    margin-bottom: 0px;
   }
   
   .ctaButton:hover {
