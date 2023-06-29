@@ -32,7 +32,7 @@
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #333;
+    background-color: #05140b;
   }
   
   li {
@@ -58,7 +58,7 @@
   }
   
   li a:hover:not(.active-link) {
-    background-color: #111;
+    background-color: rgb(145, 175, 145);
   }
   
   .active-link {
