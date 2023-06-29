@@ -3,7 +3,7 @@
     <div class="homepage">
       <div class="content-container">
         <div class="image-container">
-          <img src="alex.jpg" alt="Image">
+          <img src="report.jpg" alt="Image">
         </div>
         <div class="form-container">
           <h2>Report</h2>
@@ -74,7 +74,6 @@
   .form-container {
     width: 50%;
     margin-right: 20px;
-    margin-top: 60px;
   }
   
   .report-form {
@@ -136,6 +135,7 @@
     width: 50%;
     margin-right: 20px;
     height: 100%;
+    margin-top: 65px;
   }
   
   .image-container img {
