@@ -81,8 +81,9 @@
     flex-direction: column;
     margin-bottom: 50px;
     padding: 20px;
-    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
+    background-color: #05140b;
+    color: #ece0e0;
   }
   
   .report-form label {
@@ -122,8 +123,9 @@
     width: 45%; /* Adjust as needed to fit more cards in a row */
     padding: 20px;
     margin-bottom: 20px;
-    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 10px 0px green;
     border-radius: 5px;
+    
   }
   
   .report-card h2 {
