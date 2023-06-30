@@ -18,9 +18,9 @@
       </div>
     </div>
     <div class="container">
-      <h1>Welcome to MajiManagement System</h1>
-      <p>Manage all your water management needs in one place.</p>
-      <router-link to="/login" class="button">Sign In</router-link>
+      <h1>Welcome to MajiManagement</h1>
+<!--       <p>Manage all your water management needs in one place.</p>
+ -->      <router-link to="/login" class="button">Sign In</router-link>
     </div>
   </div>
 </template>
@@ -97,6 +97,14 @@ h2 {
   color: #05140b;
   margin-left: auto;
   margin-bottom: 110px;
+/*   background-color: rgba(208, 231, 208, 0.5); /* semi-transparent green */
+ 
+}
+
+.container h1{
+
+  background-color: rgba(208, 231, 208, 0.5);
+  border-radius: 8px;
 }
 
 h1 {
