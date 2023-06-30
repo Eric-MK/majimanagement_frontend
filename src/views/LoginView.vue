@@ -34,7 +34,7 @@
   margin: 0 auto;
   padding: 40px;
   text-align: center;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: #05140b;
   border-radius: 8px;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
 }
@@ -42,7 +42,7 @@
 h1 {
   font-size: 28px;
   margin-bottom: 30px;
-  color: #333333;
+  color: #ece0e0;
 }
 
 .input-group {
@@ -54,7 +54,7 @@ h1 {
   display: block;
   font-size: 16px;
   margin-bottom: 10px;
-  color: #333333;
+  color: #ece0e0;
 }
 
 .input-group input {
@@ -146,8 +146,8 @@ export default {
 
 <style>
 .body-wrapper {
-  background-image: url('watertap.jpg');
+  background-image: url('drinkingwater1.jpg');
   background-size: cover;
-  background-position: center;
+  background-position: ;
 }
 </style>
