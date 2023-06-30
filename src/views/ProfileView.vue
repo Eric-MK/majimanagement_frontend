@@ -2,7 +2,12 @@
     <UserNavigation/>
     <div class="profile-container">
         <h1>Profile</h1>
-
+        <div v-if="updateSuccess" class="alert alert-success">
+            Profile updated successfully!
+        </div>
+        <div v-if="passwordSuccess" class="alert alert-success">
+            Password changed successfully!
+        </div>
         <form @submit.prevent="updateProfile" class="profile-form">
             <label>Name:</label>
             <input v-model="user.name" type="text" required />
@@ -26,8 +31,81 @@
         <button @click="deleteProfile" class="delete-btn">Delete Profile</button>
     </div>
     <FooterView/>
-
 </template>
+
+<script>
+import axios from 'axios';
+import UserNavigation from '../views/UserNavigation.vue'
+import FooterView from '../views/FooterView.vue'
+
+export default {
+    data() {
+        return {
+            user: {
+                name: '',
+                email: '',
+            },
+            passwords: {
+                new: '',
+                confirm: '',
+            },
+            updateSuccess: false,
+            passwordSuccess: false,
+        };
+    },
+    components: {
+        UserNavigation,
+        FooterView,
+    },
+    beforeMount() {
+        const userId = localStorage.getItem('user_id');
+
+        if (!userId) {
+            this.$router.push('/login');
+        } else {
+            this.loadUserData(userId);
+        }
+    },
+    methods: {
+        loadUserData() {
+            const userId = localStorage.getItem('user_id');
+            axios.get(`http://localhost:8000/api/users/${userId}`).then((response) => {
+                this.user = response.data;
+            });
+        },
+        updateProfile() {
+            const userId = localStorage.getItem('user_id');
+            axios.put(`http://localhost:8000/api/users/${userId}`, this.user).then(() => {
+                this.updateSuccess = true;
+                setTimeout(() => this.updateSuccess = false, 5000);
+            });
+        },
+        changePassword() {
+            if (this.passwords.new !== this.passwords.confirm) {
+                alert('Passwords do not match!');
+                return;
+            }
+
+            const userId = localStorage.getItem('user_id');
+            axios.put(`http://localhost:8000/api/users/${userId}/password`, { password: this.passwords.new, password_confirmation: this.passwords.confirm }).then(() => {
+                this.passwordSuccess = true;
+                setTimeout(() => this.passwordSuccess = false, 5000);
+                //this.$router.push('/homepage');
+            });
+        },
+        deleteProfile() {
+            const userId = localStorage.getItem('user_id');
+            axios.delete(`http://localhost:8000/api/users/${userId}`).then(() => {
+                localStorage.removeItem('user_id');
+                this.$router.push('/login');
+            });
+        },
+    },
+    created() {
+        this.loadUserData();
+    },
+};
+</script>
 
 <style scoped>
 .profile-container {
@@ -39,6 +117,9 @@
     margin-bottom: 30px;
 }
 
+.profile-container h1{
+    text-align: center;
+}
 .profile-form {
     display: flex;
     flex-direction: column;
@@ -84,79 +165,17 @@
 .delete-btn:hover {
     background: #da190b;
 }
-</style>
-<script>
-import axios from 'axios';
-import UserNavigation from '../views/UserNavigation.vue'
-import FooterView from '../views/FooterView.vue'
 
-
-export default {
-    data() {
-        return {
-            user: {
-                name: '',
-                email: '',
-            },
-            passwords: {
-                new: '',
-                confirm: '',
-            },
-        };
-    },
-    components: {
-        UserNavigation,
-        FooterView,
-
-    },
-    beforeMount() {
-        const userId = localStorage.getItem('user_id');
-        console.log('User ID:', userId);  // Print user ID to console
-
-        if (!userId) {
-            // Redirect to login page if user id is not present
-            this.$router.push('/login');
-        }
-        else {
-            // Load user data from API, etc.
-            this.loadUserData(userId);
-        }
-    },
-    methods: {
-        loadUserData() {
-            const userId = localStorage.getItem('user_id');
-            axios.get(`http://localhost:8000/api/users/${userId}`).then((response) => {
-                this.user = response.data;
-            });
-        },
-        updateProfile() {
-            const userId = localStorage.getItem('user_id');
-            axios.put(`http://localhost:8000/api/users/${userId}`, this.user).then(() => {
-                this.$router.push('/homepage');
-            });
-        },
-        changePassword() {
-    if (this.passwords.new !== this.passwords.confirm) {
-        alert('Passwords do not match!');
-        return;
-    }
-
-    const userId = localStorage.getItem('user_id');
-    axios.put(`http://localhost:8000/api/users/${userId}/password`, { password: this.passwords.new, password_confirmation: this.passwords.confirm }).then(() => {
-        this.$router.push('/homepage');
-    });
-},
-deleteProfile() {
-    const userId = localStorage.getItem('user_id');
-    axios.delete(`http://localhost:8000/api/users/${userId}`).then(() => {
-        localStorage.removeItem('user_id');
-        this.$router.push('/login');
-    });
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
 }
-,
-    },
-    created() {
-        this.loadUserData();
-    },
-};
-</script>
+
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+</style>
