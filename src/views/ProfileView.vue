@@ -31,10 +31,12 @@
 
 <style scoped>
 .profile-container {
-    width: 60%;
+    width: 50%;
     margin: auto;
     padding: 20px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 2px 10px green;
+    margin-top: 30px;
+    margin-bottom: 30px;
 }
 
 .profile-form {
@@ -68,6 +70,7 @@
 
 .submit-btn {
     background: #4CAF50;
+    
 }
 
 .submit-btn:hover {
