@@ -2,12 +2,12 @@
     <UserNavigation/>
     <div class="homepage">
         <h1>Contacts</h1>
-        <input v-model="searchTerm" type="text" placeholder="Search by location...">
-        <div v-for="contact in filteredContacts" :key="contact.id">
+        <input class="search-box" v-model="searchTerm" type="text" placeholder="Search by location...">
+        <div class="contact-card" v-for="contact in filteredContacts" :key="contact.id">
             <h2>{{ contact.name }}</h2>
-            <p>{{ contact.phone }}</p>
-            <p>{{ contact.email }}</p>
-            <p>{{ contact.location }}</p>
+            <p><b>Phone No:</b> {{ contact.phone }}</p>
+            <p><b>Email: </b>{{ contact.email }}</p>
+            <h3>City: {{ contact.location }}</h3>
         </div>
     </div>
     <FooterView/>
@@ -71,5 +71,21 @@ export default {
     width: 80%;
     margin: auto;
     padding: 20px;
+}
+
+.search-box {
+    width: 100%;
+    padding: 10px;
+    margin: 20px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.contact-card {
+    padding: 20px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
 }
 </style>
