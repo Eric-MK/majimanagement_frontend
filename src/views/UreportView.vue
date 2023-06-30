@@ -37,7 +37,8 @@
     </div>
     <h3>Reports Made</h3>
     <div class="report-card-container">
-      <div v-for="report in reports" :key="report.id" class="report-card">
+      <div v-if="reports.length === 0">No reports made.</div>
+    <div v-else v-for="report in reports" :key="report.id" class="report-card">
         <h2>Description: {{ report.description }}</h2>
         <p>City: {{ report.city }}</p>
         <p>Street: {{ report.street }}</p>
