@@ -86,6 +86,7 @@ export default {
     margin: 10px 0;
     border: 1px solid #ccc;
     border-radius: 5px;
+    box-shadow: 0px 2px 10px green;
     background-color: #f9f9f9;
 }
 </style>
