@@ -148,6 +148,5 @@ export default {
 .body-wrapper {
   background-image: url('drinkingwater1.jpg');
   background-size: cover;
-  background-position: ;
 }
 </style>
