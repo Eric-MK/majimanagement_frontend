@@ -1,19 +1,28 @@
 <template>
-    <div :class="$style.container">
-      <UserNavigation />
-      <div :class="$style.homepage">
+  <div :class="$style.container">
+    <UserNavigation />
+    <div :class="$style.homepage">
 
-          <div :class="$style.header">
-          <h1>Welcome, <span>{{ user.name }}</span></h1>
-          <p>Join us in our mission to manage water resources effectively and efficiently. Report any issues or share your suggestions today.</p>
-          <button @click="navigateToReport" :class="$style.ctaButton">Report Now</button>
-
-        </div>
-       
+      <div :class="$style.header">
+        <h1>Welcome, <span>{{ user.name }}</span></h1>
+        <p>Join us in our mission to manage water resources effectively and efficiently. Report any issues or share your suggestions today.</p>
+        <button @click="navigateToReport" :class="$style.ctaButton">Report Now</button>
       </div>
-      <FooterView />
+     
     </div>
-  </template>
+
+    <div :class="$style.waterInfo">
+  <h2>The Impact of Water Mismanagement and Scarcity in Kenya</h2>
+  <p>Water is an essential resource, but in many parts of Kenya, it's a scarce commodity. Lack of access to clean water affects health, livelihood, and education. Poor water management exacerbates these issues, leading to increased water scarcity and impacting socio-economic development. </p>
+  <p>Through vigilant <span>reporting</span> and collective efforts, we can mitigate the adverse effects of water mismanagement. <span>Your voice can make a significant difference.</span> Stand with us to create a sustainable future for Kenya.</p>
+</div>
+
+
+    <FooterView />
+  </div>
+</template>
+
+
   
   <script>
   import axios from 'axios'
@@ -87,7 +96,7 @@
     text-align: center;
     background-image: url('drinkingwater2.jpg');
     background-size: cover;
-    margin-bottom: 90px;
+    margin-bottom: 20px;
     margin-top: 10px;
   }
   
@@ -126,5 +135,37 @@
   .ctaButton:hover {
     background-color: #2980b9;
   }
+
+ 
+
+
+.waterInfo {
+  width: 80%;
+  margin: auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0px 2px 10px green;
+  color: #333;
+  margin-bottom: 50px;
+}
+
+.waterInfo h2 {
+  font-size: 1.5em;
+  color: #000;
+  margin-bottom: 20px;
+}
+
+.waterInfo p {
+  font-size: 1.2em;
+  color: #333;
+  line-height: 1.5;
+}
+
+.waterInfo span{
+  font-size: 1.1em; 
+  color: #3498db; 
+  font-weight: bold; 
+}
   </style>
   
