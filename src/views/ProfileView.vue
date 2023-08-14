@@ -1,121 +1,134 @@
 <template>
-    <UserNavigation/>
+    <UserNavigation />
     <div class="profile-container">
-        <h1>Profile</h1>
-        <div v-if="updateSuccess" class="alert alert-success">
-            Profile updated successfully!
-        </div>
-        <div v-if="passwordSuccess" class="alert alert-success">
-            Password changed successfully!
-        </div>
-        <form @submit.prevent="updateProfile" class="profile-form">
-            <label>Name:</label>
-            <input v-model="user.name" type="text" required />
-
-            <label>Email:</label>
-            <input v-model="user.email" type="email" required />
-
-            <button type="submit" class="submit-btn">Update Profile</button>
-        </form>
-
-        <form @submit.prevent="changePassword" class="profile-form">
-            <label>New Password:</label>
-            <input v-model="passwords.new" type="password" required />
-
-            <label>Confirm New Password:</label>
-            <input v-model="passwords.confirm" type="password" required />
-
-            <button type="submit" class="submit-btn">Change Password</button>
-        </form>
-
-        <button @click="deleteProfile" class="delete-btn">Delete Profile</button>
+      <h1>Profile</h1>
+      <div v-if="updateSuccess" class="alert alert-success">
+        Profile updated successfully!
+      </div>
+      <div v-if="passwordSuccess" class="alert alert-success">
+        Password changed successfully!
+      </div>
+      <form @submit.prevent="updateProfile" class="profile-form">
+        <label>Name:</label>
+        <input v-model="user.name" type="text" required />
+  
+        <label>Email:</label>
+        <input v-model="user.email" type="email" required />
+  
+        <button type="submit" class="submit-btn">Update Profile</button>
+      </form>
+  
+      <form @submit.prevent="changePassword" class="profile-form">
+        <label>New Password:</label>
+        <input v-model="passwords.new" type="password" required />
+  
+        <label>Confirm New Password:</label>
+        <input v-model="passwords.confirm" type="password" required />
+  
+        <button type="submit" class="submit-btn">Change Password</button>
+      </form>
+  
+      <button @click="deleteProfile" class="delete-btn">Delete Profile</button>
     </div>
-    <FooterView/>
-</template>
-
-<script>
-import axios from 'axios';
-import UserNavigation from '../views/UserNavigation.vue'
-import FooterView from '../views/FooterView.vue'
-
-export default {
+    <FooterView />
+  </template>
+  
+  <script>
+  import axios from 'axios';
+  import UserNavigation from '../views/UserNavigation.vue';
+  import FooterView from '../views/FooterView.vue';
+  import Swal from 'sweetalert2';
+  
+  export default {
     data() {
-        return {
-            user: {
-                name: '',
-                email: '',
-            },
-            passwords: {
-                new: '',
-                confirm: '',
-            },
-            updateSuccess: false,
-            passwordSuccess: false,
-        };
+      return {
+        user: {
+          name: '',
+          email: '',
+        },
+        passwords: {
+          new: '',
+          confirm: '',
+        },
+        updateSuccess: false,
+        passwordSuccess: false,
+      };
     },
     components: {
-        UserNavigation,
-        FooterView,
+      UserNavigation,
+      FooterView,
     },
     beforeMount() {
-        const userId = localStorage.getItem('user_id');
-
-        if (!userId) {
-            this.$router.push('/login');
-        } else {
-            this.loadUserData(userId);
-        }
+      const userId = localStorage.getItem('user_id');
+  
+      if (!userId) {
+        this.$router.push('/login');
+      } else {
+        this.loadUserData(userId);
+      }
     },
     methods: {
-        loadUserData() {
-            const userId = localStorage.getItem('user_id');
-            axios.get(`http://localhost:8000/api/users/${userId}`).then((response) => {
-                this.user = response.data;
-            });
-        },
-        updateProfile() {
-            const userId = localStorage.getItem('user_id');
-            axios.put(`http://localhost:8000/api/users/${userId}`, this.user).then(() => {
-                this.updateSuccess = true;
-                setTimeout(() => this.updateSuccess = false, 5000);
-            });
-        },
-        changePassword() {
-            if (this.passwords.new !== this.passwords.confirm) {
-                alert('Passwords do not match!');
-                return;
-            }
-
-            const userId = localStorage.getItem('user_id');
-            axios.put(`http://localhost:8000/api/users/${userId}/password`, { password: this.passwords.new, password_confirmation: this.passwords.confirm }).then(() => {
-                this.passwordSuccess = true;
-                setTimeout(() => this.passwordSuccess = false, 5000);
-                //this.$router.push('/homepage');
-            });
-        },
-        deleteProfile() {
+      loadUserData() {
+        const userId = localStorage.getItem('user_id');
+        axios.get(`http://localhost:8000/api/users/${userId}`).then((response) => {
+          this.user = response.data;
+        });
+      },
+      updateProfile() {
+        const userId = localStorage.getItem('user_id');
+        axios.put(`http://localhost:8000/api/users/${userId}`, this.user).then(() => {
+          this.updateSuccess = true;
+          setTimeout(() => this.updateSuccess = false, 5000);
+        });
+      },
+      changePassword() {
+        if (this.passwords.new !== this.passwords.confirm) {
+          alert('Passwords do not match!');
+          return;
+        }
+  
+        const userId = localStorage.getItem('user_id');
+        axios.put(`http://localhost:8000/api/users/${userId}/password`, { password: this.passwords.new, password_confirmation: this.passwords.confirm }).then(() => {
+          this.passwordSuccess = true;
+          setTimeout(() => this.passwordSuccess = false, 5000);
+        });
+      },
+      deleteProfile() {
+        Swal.fire({
+          title: 'Delete Account',
+          text: 'Are you sure you want to delete your account? This action cannot be undone.',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          cancelButtonColor: '#3085d6',
+          confirmButtonText: 'Delete',
+          cancelButtonText: 'Cancel'
+        }).then((result) => {
+          if (result.isConfirmed) {
             const userId = localStorage.getItem('user_id');
             axios.delete(`http://localhost:8000/api/users/${userId}`).then(() => {
-                localStorage.removeItem('user_id');
-                this.$router.push('/login');
+              localStorage.removeItem('user_id');
+              this.$router.push('/login');
             });
-        },
+          }
+        });
+      },
     },
     created() {
-        this.loadUserData();
+      this.loadUserData();
     },
-};
-</script>
-
-<style scoped>
-.profile-container {
+  };
+  </script>
+  
+  <style scoped>
+  .profile-container {
     width: 50%;
     margin: auto;
     padding: 20px;
     box-shadow: 0px 2px 10px green;
     margin-top: 30px;
     margin-bottom: 30px;
-}
+  }
 
 .profile-container h1{
     text-align: center;
