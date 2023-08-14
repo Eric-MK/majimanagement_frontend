@@ -7,12 +7,16 @@
           <li class="centered">
               <router-link to="/adminpage" active-class="active-link">Reports</router-link>
           </li>
-          <li class="centered">
+         <!--  <li class="centered">
               <router-link to="/tips" active-class="active-link">Tips</router-link>
-          </li>
+          </li> -->
           <li class="centered">
               <router-link to="/contacts" active-class="active-link">Contacts</router-link>
           </li>
+           <li class="centered">
+              <router-link to="/tips" active-class="active-link">Users</router-link>
+          </li> 
+
           <li class="centered right">
               <a @click="logout">Logout</a>
           </li>
