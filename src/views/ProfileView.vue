@@ -8,15 +8,15 @@
       <div v-if="passwordSuccess" class="alert alert-success">
         Password changed successfully!
       </div>
-      <form @submit.prevent="updateProfile" class="profile-form">
+      <form ref="updateProfileForm" class="profile-form">
         <label>Name:</label>
         <input v-model="user.name" type="text" required />
-  
+
         <label>Email:</label>
         <input v-model="user.email" type="email" required />
-  
-        <button type="submit" class="submit-btn">Update Profile</button>
-      </form>
+
+        <button type="button" class="submit-btn" @click="confirmProfileUpdate">Update Profile</button>
+    </form>
   
       <form @submit.prevent="changePassword" class="profile-form">
         <label>New Password:</label>
@@ -31,94 +31,135 @@
       <button @click="deleteProfile" class="delete-btn">Delete Profile</button>
     </div>
     <FooterView />
-  </template>
-  
-  <script>
-  import axios from 'axios';
-  import UserNavigation from '../views/UserNavigation.vue';
-  import FooterView from '../views/FooterView.vue';
-  import Swal from 'sweetalert2';
-  
-  export default {
+</template>
+
+<script>
+import axios from 'axios';
+import UserNavigation from '../views/UserNavigation.vue';
+import FooterView from '../views/FooterView.vue';
+import Swal from 'sweetalert2';
+
+export default {
     data() {
-      return {
-        user: {
-          name: '',
-          email: '',
-        },
-        passwords: {
-          new: '',
-          confirm: '',
-        },
-        updateSuccess: false,
-        passwordSuccess: false,
-      };
+        return {
+            user: {
+                name: '',
+                email: '',
+            },
+            passwords: {
+                new: '',
+                confirm: '',
+            },
+            updateSuccess: false,
+            passwordSuccess: false,
+        };
     },
     components: {
-      UserNavigation,
-      FooterView,
+        UserNavigation,
+        FooterView,
     },
     beforeMount() {
-      const userId = localStorage.getItem('user_id');
-  
-      if (!userId) {
-        this.$router.push('/login');
-      } else {
-        this.loadUserData(userId);
-      }
+        const userId = localStorage.getItem('user_id');
+
+        if (!userId) {
+            this.$router.push('/login');
+        } else {
+            this.loadUserData(userId);
+        }
     },
     methods: {
-      loadUserData() {
-        const userId = localStorage.getItem('user_id');
-        axios.get(`http://localhost:8000/api/users/${userId}`).then((response) => {
-          this.user = response.data;
-        });
-      },
-      updateProfile() {
-        const userId = localStorage.getItem('user_id');
-        axios.put(`http://localhost:8000/api/users/${userId}`, this.user).then(() => {
-          this.updateSuccess = true;
-          setTimeout(() => this.updateSuccess = false, 5000);
-        });
-      },
-      changePassword() {
-        if (this.passwords.new !== this.passwords.confirm) {
-          alert('Passwords do not match!');
-          return;
-        }
-  
-        const userId = localStorage.getItem('user_id');
-        axios.put(`http://localhost:8000/api/users/${userId}/password`, { password: this.passwords.new, password_confirmation: this.passwords.confirm }).then(() => {
-          this.passwordSuccess = true;
-          setTimeout(() => this.passwordSuccess = false, 5000);
-        });
-      },
-      deleteProfile() {
-        Swal.fire({
-          title: 'Delete Account',
-          text: 'Are you sure you want to delete your account? This action cannot be undone.',
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#d33',
-          cancelButtonColor: '#3085d6',
-          confirmButtonText: 'Delete',
-          cancelButtonText: 'Cancel'
-        }).then((result) => {
-          if (result.isConfirmed) {
+        loadUserData() {
             const userId = localStorage.getItem('user_id');
-            axios.delete(`http://localhost:8000/api/users/${userId}`).then(() => {
-              localStorage.removeItem('user_id');
-              this.$router.push('/login');
+            axios.get(`http://localhost:8000/api/users/${userId}`).then((response) => {
+                this.user = response.data;
             });
-          }
-        });
-      },
+        },
+        updateProfile() {
+            const userId = localStorage.getItem('user_id');
+            axios.put(`http://localhost:8000/api/users/${userId}`, this.user)
+                .then(response => {
+                    const message = response.data.message; // Get the message from the API response
+
+                    if (message === 'User updated successfully') {
+                        /* this.updateSuccess = true;
+                        setTimeout(() => this.updateSuccess = false, 5000); */
+                        Swal.fire({
+                            title: 'Profile Updated',
+                            text: 'Your profile has been updated successfully!',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        });
+                        
+                    } else if (message === 'No changes detected') {
+                        // Handle the scenario where no changes were detected
+                        // Display the custom message or perform any necessary actions
+                        Swal.fire({
+                            title: 'No Changes Detected',
+                            text: 'No changes were made to your profile.',
+                            icon: 'info',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                })
+                .catch(error => {
+                    // Handle API error
+                    console.error(error);
+                });
+        },
+        changePassword() {
+            if (this.passwords.new !== this.passwords.confirm) {
+                alert('Passwords do not match!');
+                return;
+            }
+
+            const userId = localStorage.getItem('user_id');
+            axios.put(`http://localhost:8000/api/users/${userId}/password`, { password: this.passwords.new, password_confirmation: this.passwords.confirm }).then(() => {
+                this.passwordSuccess = true;
+                setTimeout(() => this.passwordSuccess = false, 5000);
+            });
+        },
+        deleteProfile() {
+            Swal.fire({
+                title: 'Delete Account',
+                text: 'Are you sure you want to delete your account? This action cannot be undone.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Delete',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const userId = localStorage.getItem('user_id');
+                    axios.delete(`http://localhost:8000/api/users/${userId}`).then(() => {
+                        localStorage.removeItem('user_id');
+                        this.$router.push('/login');
+                    });
+                }
+            });
+        },
+        confirmProfileUpdate() {
+            Swal.fire({
+                title: 'Update Profile',
+                text: 'Are you sure you want to update your profile details?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Update',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.updateProfile();
+                }
+            });
+        },
     },
     created() {
-      this.loadUserData();
+        this.loadUserData();
     },
-  };
-  </script>
+};
+</script>
   
   <style scoped>
   .profile-container {
