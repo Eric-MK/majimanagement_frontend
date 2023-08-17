@@ -155,11 +155,21 @@ export default {
         }
       });
     },
-    deleteReport(reportId) {
-      if (!confirm("Are you sure you want to delete this report?")) {
-        return; // Stop here if the user clicked "Cancel"
-      }
 
+    deleteReport(reportId) {
+  // Show a confirmation dialog using SweetAlert
+  Swal.fire({
+    title: "Delete Report",
+    text: "Are you sure you want to delete this report?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#d33",
+    cancelButtonColor: "#3085d6",
+    confirmButtonText: "Delete",
+    cancelButtonText: "Cancel",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // User confirmed, proceed to delete the report
       axios
         .delete(`http://localhost:8000/api/reports/${reportId}`)
         .then((response) => {
@@ -168,15 +178,24 @@ export default {
             (report) => report.id !== reportId
           );
 
-          alert("Report deleted successfully");
+          // Show a success message using SweetAlert
+          Swal.fire({
+            title: "Report Deleted",
+            text: "Your report has been deleted successfully!",
+            icon: "success",
+            confirmButtonText: "OK",
+          });
         })
         .catch((error) => {
           console.log(error);
           // handle error
         });
-    },
+    }
+  });
+},
   },
 };
+
 </script>
 <style scoped>
 .homepage {
