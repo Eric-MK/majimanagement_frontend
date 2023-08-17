@@ -3,7 +3,7 @@
   <div class="homepage">
     <div class="content-container">
       <div class="image-container">
-        <img src="report.jpg" alt="Image">
+        <img src="report.jpg" alt="Image" />
       </div>
       <div class="form-container">
         <h2>Report</h2>
@@ -20,16 +20,20 @@
           </select>
 
           <label for="street">Street:</label>
-          <input v-model="newReport.street" id="street" required>
+          <input v-model="newReport.street" id="street" required />
 
           <label for="number">Number:</label>
-          <input v-model="newReport.number" id="number" required>
+          <input v-model="newReport.number" id="number" required />
 
           <label for="postal_code">Postal Code:</label>
-          <input v-model="newReport.postal_code" id="postal_code" required>
+          <input v-model="newReport.postal_code" id="postal_code" required />
 
           <label for="description">Description:</label>
-          <textarea v-model="newReport.description" id="description" required></textarea>
+          <textarea
+            v-model="newReport.description"
+            id="description"
+            required
+          ></textarea>
 
           <button type="submit">Create Report</button>
         </form>
@@ -38,7 +42,12 @@
     <h3>Reports Made</h3>
     <div class="report-card-container">
       <div v-if="reports.length === 0">No reports made.</div>
-    <div v-else v-for="report in reports" :key="report.id" class="report-card">
+      <div
+        v-else
+        v-for="report in reports"
+        :key="report.id"
+        class="report-card"
+      >
         <h2>Description: {{ report.description }}</h2>
         <p>City: {{ report.city }}</p>
         <p>Street: {{ report.street }}</p>
@@ -52,97 +61,99 @@
   <FooterView />
 </template>
 
-
-
 <script>
-import axios from 'axios'
-import UserNavigation from '../views/UserNavigation.vue'
-import FooterView from '../views/FooterView.vue'
+import axios from "axios";
+import UserNavigation from "../views/UserNavigation.vue";
+import FooterView from "../views/FooterView.vue";
 
 export default {
   data() {
     return {
       reports: [],
       newReport: {
-        user_id: '', // the user_id will be added before the API call
-        city: '',
-        street: '',
-        number: '',
-        postal_code: '',
-        description: '',
+        user_id: "", // the user_id will be added before the API call
+        city: "",
+        street: "",
+        number: "",
+        postal_code: "",
+        description: "",
       },
-    }
+    };
   },
   components: {
     UserNavigation,
     FooterView,
   },
   beforeMount() {
-    const userId = localStorage.getItem('user_id');
-    console.log('User ID:', userId);  // Print user ID to console
+    const userId = localStorage.getItem("user_id");
+    console.log("User ID:", userId); // Print user ID to console
 
     if (!userId) {
       // Redirect to login page if user id is not present
-      this.$router.push('/login');
-    }
-    else {
-      this.newReport.user_id = userId;  // set the user_id
+      this.$router.push("/login");
+    } else {
+      this.newReport.user_id = userId; // set the user_id
       this.loadUserReports(userId);
     }
   },
   methods: {
     loadUserReports(userId) {
-      axios.get(`http://localhost:8000/api/users/${userId}/reports`)
-        .then(response => {
+      axios
+        .get(`http://localhost:8000/api/users/${userId}/reports`)
+        .then((response) => {
           // assuming response.data has the user's reports
           this.reports = response.data;
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
           // handle error
         });
     },
     createReport() {
       // Assume you have a POST endpoint at `/reports` for report creation
-      axios.post(`http://localhost:8000/api/reports`, this.newReport)
-        .then(response => {
+      axios
+        .post(`http://localhost:8000/api/reports`, this.newReport)
+        .then((response) => {
           // Clear the form
           this.newReport = {
-            user_id: this.newReport.user_id,  // keep the user_id
-            city: '',
-            street: '',
-            number: '',
-            postal_code: '',
-            description: '',
+            user_id: this.newReport.user_id, // keep the user_id
+            city: "",
+            street: "",
+            number: "",
+            postal_code: "",
+            description: "",
           };
 
           // Add the newly created report to the list
           this.reports.push(response.data);
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
           // handle error
         });
     },
     deleteReport(reportId) {
-      if (!confirm('Are you sure you want to delete this report?')) {
-        return;  // Stop here if the user clicked "Cancel"
+      if (!confirm("Are you sure you want to delete this report?")) {
+        return; // Stop here if the user clicked "Cancel"
       }
 
-      axios.delete(`http://localhost:8000/api/reports/${reportId}`)
-        .then(response => {
+      axios
+        .delete(`http://localhost:8000/api/reports/${reportId}`)
+        .then((response) => {
           // Remove the deleted report from the list
-          this.reports = this.reports.filter(report => report.id !== reportId);
+          this.reports = this.reports.filter(
+            (report) => report.id !== reportId
+          );
 
-          alert('Report deleted successfully');
+          alert("Report deleted successfully");
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
           // handle error
         });
-    }
-  }
-}
+    },
+  },
+};
 </script>
 <style scoped>
 .homepage {
@@ -219,7 +230,6 @@ export default {
   margin-bottom: 20px;
   box-shadow: 0px 0px 10px 0px green;
   border-radius: 5px;
-  
 }
 
 .report-card h2 {
