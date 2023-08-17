@@ -65,6 +65,7 @@
 import axios from "axios";
 import UserNavigation from "../views/UserNavigation.vue";
 import FooterView from "../views/FooterView.vue";
+import Swal from "sweetalert2";
 
 export default {
   data() {
@@ -110,27 +111,49 @@ export default {
         });
     },
     createReport() {
-      // Assume you have a POST endpoint at `/reports` for report creation
-      axios
-        .post(`http://localhost:8000/api/reports`, this.newReport)
-        .then((response) => {
-          // Clear the form
-          this.newReport = {
-            user_id: this.newReport.user_id, // keep the user_id
-            city: "",
-            street: "",
-            number: "",
-            postal_code: "",
-            description: "",
-          };
+      // Show a confirmation dialog using SweetAlert
+      Swal.fire({
+        title: "Create Report",
+        text: "Are you sure you want to create this report?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Create",
+        cancelButtonText: "Cancel",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // User confirmed, proceed to create the report
+          axios
+            .post(`http://localhost:8000/api/reports`, this.newReport)
+            .then((response) => {
+              // Clear the form
+              this.newReport = {
+                user_id: this.newReport.user_id, // keep the user_id
+                city: "",
+                street: "",
+                number: "",
+                postal_code: "",
+                description: "",
+              };
 
-          // Add the newly created report to the list
-          this.reports.push(response.data);
-        })
-        .catch((error) => {
-          console.log(error);
-          // handle error
-        });
+              // Add the newly created report to the list
+              this.reports.push(response.data);
+
+              // Show a success message
+              Swal.fire({
+                title: "Report Created",
+                text: "Your report has been created successfully!",
+                icon: "success",
+                confirmButtonText: "OK",
+              });
+            })
+            .catch((error) => {
+              console.log(error);
+              // handle error
+            });
+        }
+      });
     },
     deleteReport(reportId) {
       if (!confirm("Are you sure you want to delete this report?")) {
