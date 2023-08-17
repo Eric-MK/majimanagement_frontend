@@ -44,7 +44,7 @@
         <p>Street: {{ report.street }}</p>
         <p>Number: {{ report.number }}</p>
         <p>Postal Code: {{ report.postal_code }}</p>
-        <p>Status: {{ report.status }}</p>
+        <p><b>Status:</b> {{ report.status }}</p>
         <button @click="deleteReport(report.id)">Delete Report</button>
       </div>
     </div>
@@ -52,6 +52,98 @@
   <FooterView />
 </template>
 
+
+
+<script>
+import axios from 'axios'
+import UserNavigation from '../views/UserNavigation.vue'
+import FooterView from '../views/FooterView.vue'
+
+export default {
+  data() {
+    return {
+      reports: [],
+      newReport: {
+        user_id: '', // the user_id will be added before the API call
+        city: '',
+        street: '',
+        number: '',
+        postal_code: '',
+        description: '',
+      },
+    }
+  },
+  components: {
+    UserNavigation,
+    FooterView,
+  },
+  beforeMount() {
+    const userId = localStorage.getItem('user_id');
+    console.log('User ID:', userId);  // Print user ID to console
+
+    if (!userId) {
+      // Redirect to login page if user id is not present
+      this.$router.push('/login');
+    }
+    else {
+      this.newReport.user_id = userId;  // set the user_id
+      this.loadUserReports(userId);
+    }
+  },
+  methods: {
+    loadUserReports(userId) {
+      axios.get(`http://localhost:8000/api/users/${userId}/reports`)
+        .then(response => {
+          // assuming response.data has the user's reports
+          this.reports = response.data;
+        })
+        .catch(error => {
+          console.log(error);
+          // handle error
+        });
+    },
+    createReport() {
+      // Assume you have a POST endpoint at `/reports` for report creation
+      axios.post(`http://localhost:8000/api/reports`, this.newReport)
+        .then(response => {
+          // Clear the form
+          this.newReport = {
+            user_id: this.newReport.user_id,  // keep the user_id
+            city: '',
+            street: '',
+            number: '',
+            postal_code: '',
+            description: '',
+          };
+
+          // Add the newly created report to the list
+          this.reports.push(response.data);
+        })
+        .catch(error => {
+          console.log(error);
+          // handle error
+        });
+    },
+    deleteReport(reportId) {
+      if (!confirm('Are you sure you want to delete this report?')) {
+        return;  // Stop here if the user clicked "Cancel"
+      }
+
+      axios.delete(`http://localhost:8000/api/reports/${reportId}`)
+        .then(response => {
+          // Remove the deleted report from the list
+          this.reports = this.reports.filter(report => report.id !== reportId);
+
+          alert('Report deleted successfully');
+        })
+        .catch(error => {
+          console.log(error);
+          // handle error
+        });
+    }
+  }
+}
+</script>
 <style scoped>
 .homepage {
   width: 100%;
@@ -161,94 +253,3 @@
   }
 }
 </style>
-
-<script>
-import axios from 'axios'
-import UserNavigation from '../views/UserNavigation.vue'
-import FooterView from '../views/FooterView.vue'
-
-export default {
-  data() {
-    return {
-      reports: [],
-      newReport: {
-        user_id: '', // the user_id will be added before the API call
-        city: '',
-        street: '',
-        number: '',
-        postal_code: '',
-        description: '',
-      },
-    }
-  },
-  components: {
-    UserNavigation,
-    FooterView,
-  },
-  beforeMount() {
-    const userId = localStorage.getItem('user_id');
-    console.log('User ID:', userId);  // Print user ID to console
-
-    if (!userId) {
-      // Redirect to login page if user id is not present
-      this.$router.push('/login');
-    }
-    else {
-      this.newReport.user_id = userId;  // set the user_id
-      this.loadUserReports(userId);
-    }
-  },
-  methods: {
-    loadUserReports(userId) {
-      axios.get(`http://localhost:8000/api/users/${userId}/reports`)
-        .then(response => {
-          // assuming response.data has the user's reports
-          this.reports = response.data;
-        })
-        .catch(error => {
-          console.log(error);
-          // handle error
-        });
-    },
-    createReport() {
-      // Assume you have a POST endpoint at `/reports` for report creation
-      axios.post(`http://localhost:8000/api/reports`, this.newReport)
-        .then(response => {
-          // Clear the form
-          this.newReport = {
-            user_id: this.newReport.user_id,  // keep the user_id
-            city: '',
-            street: '',
-            number: '',
-            postal_code: '',
-            description: '',
-          };
-
-          // Add the newly created report to the list
-          this.reports.push(response.data);
-        })
-        .catch(error => {
-          console.log(error);
-          // handle error
-        });
-    },
-    deleteReport(reportId) {
-      if (!confirm('Are you sure you want to delete this report?')) {
-        return;  // Stop here if the user clicked "Cancel"
-      }
-
-      axios.delete(`http://localhost:8000/api/reports/${reportId}`)
-        .then(response => {
-          // Remove the deleted report from the list
-          this.reports = this.reports.filter(report => report.id !== reportId);
-
-          alert('Report deleted successfully');
-        })
-        .catch(error => {
-          console.log(error);
-          // handle error
-        });
-    }
-  }
-}
-</script>
