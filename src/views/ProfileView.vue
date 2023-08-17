@@ -18,15 +18,15 @@
         <button type="button" class="submit-btn" @click="confirmProfileUpdate">Update Profile</button>
     </form>
   
-      <form @submit.prevent="changePassword" class="profile-form">
+    <form @submit.prevent="changePassword" class="profile-form">
         <label>New Password:</label>
         <input v-model="passwords.new" type="password" required />
   
         <label>Confirm New Password:</label>
         <input v-model="passwords.confirm" type="password" required />
-  
-        <button type="submit" class="submit-btn">Change Password</button>
-      </form>
+
+        <button type="button" class="submit-btn" @click="confirmPasswordChange">Change Password</button>
+    </form>
   
       <button @click="deleteProfile" class="delete-btn">Delete Profile</button>
     </div>
@@ -118,6 +118,24 @@ export default {
                 setTimeout(() => this.passwordSuccess = false, 5000);
             });
         },
+
+        confirmPasswordChange() {
+            Swal.fire({
+                title: 'Change Password',
+                text: 'Are you sure you want to change your password?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Change Password',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.changePassword();
+                }
+            });
+        },
+
         deleteProfile() {
             Swal.fire({
                 title: 'Delete Account',
@@ -160,6 +178,7 @@ export default {
     },
 };
 </script>
+
   
   <style scoped>
   .profile-container {
