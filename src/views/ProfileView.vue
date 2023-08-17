@@ -21,7 +21,7 @@
     <form @submit.prevent="changePassword" class="profile-form">
         <label>New Password:</label>
         <input v-model="passwords.new" type="password" required />
-  
+
         <label>Confirm New Password:</label>
         <input v-model="passwords.confirm" type="password" required />
 
@@ -106,12 +106,8 @@ export default {
                     console.error(error);
                 });
         },
+       
         changePassword() {
-            if (this.passwords.new !== this.passwords.confirm) {
-                alert('Passwords do not match!');
-                return;
-            }
-
             const userId = localStorage.getItem('user_id');
             axios.put(`http://localhost:8000/api/users/${userId}/password`, { password: this.passwords.new, password_confirmation: this.passwords.confirm }).then(() => {
                 this.passwordSuccess = true;
@@ -120,6 +116,16 @@ export default {
         },
 
         confirmPasswordChange() {
+            if (this.passwords.new !== this.passwords.confirm) {
+                Swal.fire({
+                    title: 'Password Mismatch',
+                    text: 'The new passwords do not match. Please try again.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+                return;
+            }
+
             Swal.fire({
                 title: 'Change Password',
                 text: 'Are you sure you want to change your password?',
@@ -135,7 +141,6 @@ export default {
                 }
             });
         },
-
         deleteProfile() {
             Swal.fire({
                 title: 'Delete Account',
