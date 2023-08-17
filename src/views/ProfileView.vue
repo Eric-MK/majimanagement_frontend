@@ -110,37 +110,45 @@ export default {
         changePassword() {
             const userId = localStorage.getItem('user_id');
             axios.put(`http://localhost:8000/api/users/${userId}/password`, { password: this.passwords.new, password_confirmation: this.passwords.confirm }).then(() => {
-                this.passwordSuccess = true;
-                setTimeout(() => this.passwordSuccess = false, 5000);
-            });
-        },
+                 this.passwordSuccess = true;
+        setTimeout(() => this.passwordSuccess = false, 5000);
+        
+        Swal.fire({
+            title: 'Password Changed',
+            text: 'Your password has been changed successfully!',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        });
+    });
+},
 
-        confirmPasswordChange() {
-            if (this.passwords.new !== this.passwords.confirm) {
-                Swal.fire({
-                    title: 'Password Mismatch',
-                    text: 'The new passwords do not match. Please try again.',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
-                return;
-            }
+confirmPasswordChange() {
+    if (this.passwords.new !== this.passwords.confirm) {
+        Swal.fire({
+            title: 'Password Mismatch',
+            text: 'The new passwords do not match. Please try again.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
+        return;
+    }
 
-            Swal.fire({
-                title: 'Change Password',
-                text: 'Are you sure you want to change your password?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Change Password',
-                cancelButtonText: 'Cancel'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    this.changePassword();
-                }
-            });
-        },
+    Swal.fire({
+        title: 'Change Password',
+        text: 'Are you sure you want to change your password?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Change Password',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            this.changePassword();
+        }
+    });
+},
+
         deleteProfile() {
             Swal.fire({
                 title: 'Delete Account',
