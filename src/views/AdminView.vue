@@ -14,9 +14,9 @@
             <p>Reported by: {{ report.user.name }}</p>
             <p>User email: {{ report.user.email }}</p>
             <p>Status: <select v-model="report.status" @change="updateReportStatus(report)">
-                <option value="pending">Pending</option>
-                <option value="approved">Approved</option>
-                <option value="denied">Denied</option>
+                <option value="Being worked on">Worked On</option>
+                <option value="Call for more info">Call for more info</option>
+                <option value="Done">Done</option>
             </select></p>
 
             <p class="succ" v-if="report.updateMessage">{{ report.updateMessage }}</p>

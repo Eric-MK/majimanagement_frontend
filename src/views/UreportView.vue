@@ -53,9 +53,17 @@
         <p>Street: {{ report.street }}</p>
         <p>Number: {{ report.number }}</p>
         <p>Postal Code: {{ report.postal_code }}</p>
-        <p><b>Status:</b> {{ report.status }}</p>
-        <button @click="deleteReport(report.id)">Delete Report</button>
-      </div>
+        <p><b>Status:</b>
+      <span
+        :style="{
+          color: getStatusColor(report.status.toLowerCase())
+        }"
+      >
+        {{ report.status }}
+      </span>
+    </p>
+    <button @click="deleteReport(report.id)">Delete Report</button>
+  </div>
     </div>
   </div>
   <FooterView />
@@ -193,6 +201,20 @@ export default {
     }
   });
 },
+getStatusColor(status) {
+      switch (status) {
+        case "reported":
+          return "#f39c12"; // Color for "reported" status
+        case "being worked on":
+          return "#3498db"; // Color for "being worked on" status
+        case "call for more info":
+          return "#e74c3c"; // Color for "call for more info" status
+        case "done":
+          return "#2ecc71"; // Color for "done" status
+        default:
+          return "black"; // Default color
+      }
+    },
   },
 };
 
