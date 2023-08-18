@@ -3,6 +3,7 @@
     <div>
         <input type="text" v-model="searchCity" placeholder="Search by City">
         <input type="text" v-model="searchReporter" placeholder="Search by Reporter's Name">
+        <p>Total Reports: {{ filteredReports.length }}</p>
 
         <div v-for="report in filteredReports" :key="report.id">
             <h2>City: {{ report.city }}</h2>
