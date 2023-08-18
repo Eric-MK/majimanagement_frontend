@@ -10,6 +10,7 @@
               <span class="user-name">{{ user.name }}</span>
               <span class="user-email">{{ user.email }}</span>
             </div>
+            <button @click="deleteUser(user.id)" class="delete-button">Delete</button>
           </li>
         </ul>
       </div>
@@ -39,6 +40,17 @@
         }).catch((error) => {
           console.error(error);
         });
+      },
+      deleteUser(userId) {
+        if (confirm('Are you sure you want to delete this user?')) {
+          axios.delete(`http://localhost:8000/api/users/${userId}`)
+            .then((response) => {
+              this.fetchUsers(); // Refresh the user list after deletion
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        }
       },
     },
   };
@@ -86,5 +98,19 @@
   .user-email {
     color: #777;
   }
+
+  .delete-button {
+  margin-left: 10px;
+  padding: 5px 10px;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.delete-button:hover {
+  background-color: #c0392b;
+}
   </style>
   
