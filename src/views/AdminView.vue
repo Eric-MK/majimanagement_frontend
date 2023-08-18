@@ -1,15 +1,17 @@
 <template>
 <AdminNavigation/>
     <div>
-        <input type="text" v-model="searchTerm" placeholder="Search by City">
+        <input type="text" v-model="searchCity" placeholder="Search by City">
+        <input type="text" v-model="searchReporter" placeholder="Search by Reporter's Name">
+
         <div v-for="report in filteredReports" :key="report.id">
             <h2>City: {{ report.city }}</h2>
             <p>Street: {{ report.street }}</p>
             <p>Street_Number: {{ report.number }}</p>
             <p>Postal_Code: {{ report.postal_code }}</p>
             <p>Description: {{ report.description }}</p>
-            <p>Reported by: {{ report.user.name }}</p> <!-- showing reporter's name -->
-            <p>User email: {{ report.user.email}}</p>
+            <p>Reported by: {{ report.user.name }}</p>
+            <p>User email: {{ report.user.email }}</p>
             <p>Status: <select v-model="report.status" @change="updateReportStatus(report)">
                 <option value="pending">Pending</option>
                 <option value="approved">Approved</option>
@@ -71,12 +73,17 @@ export default {
     data() {
         return {
             reports: [],
-            searchTerm: ''
+            searchCity: '', // Define searchCity
+            searchReporter: '', // Define searchReporter
         }
     },
     computed: {
         filteredReports() {
-            return this.reports.filter(report => report.city.includes(this.searchTerm))
+            return this.reports.filter(report => {
+                const cityMatch = report.city.includes(this.searchCity);
+                const reporterMatch = report.user.name.toLowerCase().includes(this.searchReporter.toLowerCase());
+                return cityMatch && reporterMatch;
+            });
         }
     },
     methods: {
@@ -125,4 +132,5 @@ export default {
     },
 }
 </script>
+
 
