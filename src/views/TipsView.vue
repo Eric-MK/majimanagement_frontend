@@ -3,6 +3,7 @@
       <AdminNavigation />
       <div class="users-container">
         <h2>All Users</h2>
+        <p>Total Users: {{ users.length }}</p>
         <ul class="user-list">
           <li v-for="user in users" :key="user.id" class="user-item">
             <div class="user-details">
@@ -53,6 +54,11 @@
   h2 {
     font-size: 24px;
     margin-bottom: 20px;
+  }
+  
+  p {
+    font-size: 18px;
+    margin-bottom: 10px;
   }
   
   .user-list {
