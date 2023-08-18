@@ -121,6 +121,7 @@
   }
 
   .delete-button {
+  margin-top: 6px;
   margin-left: 10px;
   padding: 5px 10px;
   background-color: #e74c3c;
