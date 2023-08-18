@@ -4,17 +4,17 @@
       <h2>Services Offered</h2>
       <div class="services">
         <div class="service">
-          <h3>Water Usage Tracking</h3>
-          <p>Track and monitor your water consumption to optimize usage.</p>
-        </div>
+      <h3>Reporting</h3>
+      <p>Report water-related issues, such as leakages or contamination, to the appropriate authorities for prompt action and resolution.</p>
+    </div>
         <div class="service">
-          <h3>Billing and Invoicing</h3>
-          <p>Manage billing and invoicing for water services effortlessly.</p>
-        </div>
-        <div class="service">
-          <h3>Customer Support</h3>
-          <p>24/7 customer support to assist you with any queries or issues.</p>
-        </div>
+      <h3>Water Resource Management</h3>
+      <p>Connect with cooperatives to ensure sustainable water resource management and conservation in Kenya.</p>
+    </div>
+    <div class="service">
+      <h3>Water Quality Monitoring</h3>
+      <p>Monitor the quality of water sources and ensure safe and clean water supply</p>
+    </div>
       </div>
     </div>
     <div class="container">
