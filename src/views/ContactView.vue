@@ -28,6 +28,8 @@
 <script>
 import axios from 'axios'
 import AdminNavigation from '../views/NavigationAdminView.vue'
+import Swal from 'sweetalert2';
+
 
 export default {
     data() {
@@ -74,17 +76,39 @@ export default {
                 })
         },
         deleteContact(contact) {
-            axios.delete(`http://localhost:8000/api/contacts/${contact.id}`)
-                .then(response => {
-                    // find the deleted contact in the contacts array
-                    const contactIndex = this.contacts.findIndex(c => c.id === contact.id);
-                    // if found, set its message field
-                    if (contactIndex > -1) {
-                        this.contacts[contactIndex].message = response.data.message;
-                    }
-                    this.getContacts();
-                })
-        },
+    Swal.fire({
+      title: 'Delete Contact',
+      text: 'Are you sure you want to delete this contact?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Delete',
+      cancelButtonText: 'Cancel',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.delete(`http://localhost:8000/api/contacts/${contact.id}`)
+          .then(response => {
+            // find the deleted contact in the contacts array
+            const contactIndex = this.contacts.findIndex(c => c.id === contact.id);
+            // if found, set its message field
+            if (contactIndex > -1) {
+              this.contacts[contactIndex].message = response.data.message;
+            }
+            this.getContacts();
+            Swal.fire({
+              title: 'Contact Deleted',
+              text: 'The contact has been deleted successfully!',
+              icon: 'success',
+              confirmButtonText: 'OK',
+            });
+          })
+          .catch(error => {
+            console.error(error);
+          });
+      }
+    });
+  },
         clearMessage() {
             setTimeout(() => {
                 this.errors = {};
