@@ -18,7 +18,7 @@
                 <option value="denied">Denied</option>
             </select></p>
 
-            <p v-if="report.updateMessage">{{ report.updateMessage }}</p>
+            <p class="succ" v-if="report.updateMessage">{{ report.updateMessage }}</p>
 
          
         </div>
@@ -57,6 +57,10 @@
     font-size: 1em;
     color: #666;
     line-height: 1.6;
+  }
+
+  .succ{
+    color: green;
   }
 
   select {
