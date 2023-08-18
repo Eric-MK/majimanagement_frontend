@@ -10,7 +10,7 @@
               <span class="user-name">{{ user.name }}</span>
               <span class="user-email">{{ user.email }}</span>
             </div>
-            <button @click="deleteUser(user.id)" class="delete-button">Delete</button>
+            <button @click="confirmDeleteUser(user)" class="delete-button">Delete</button>
           </li>
         </ul>
       </div>
@@ -19,6 +19,7 @@
   
   <script>
   import axios from 'axios';
+  import Swal from 'sweetalert2';
   import AdminNavigation from '../views/NavigationAdminView.vue';
   
   export default {
@@ -41,16 +42,36 @@
           console.error(error);
         });
       },
+      confirmDeleteUser(user) {
+        Swal.fire({
+          title: 'Delete User',
+          text: 'Are you sure you want to delete this user?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          cancelButtonColor: '#3085d6',
+          confirmButtonText: 'Delete',
+          cancelButtonText: 'Cancel',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.deleteUser(user.id);
+          }
+        });
+      },
       deleteUser(userId) {
-        if (confirm('Are you sure you want to delete this user?')) {
-          axios.delete(`http://localhost:8000/api/users/${userId}`)
-            .then((response) => {
-              this.fetchUsers(); // Refresh the user list after deletion
-            })
-            .catch((error) => {
-              console.error(error);
+        axios.delete(`http://localhost:8000/api/users/${userId}`)
+          .then((response) => {
+            this.fetchUsers(); // Refresh the user list after deletion
+            Swal.fire({
+              title: 'User Deleted',
+              text: 'The user has been deleted successfully!',
+              icon: 'success',
+              confirmButtonText: 'OK',
             });
-        }
+          })
+          .catch((error) => {
+            console.error(error);
+          });
       },
     },
   };
